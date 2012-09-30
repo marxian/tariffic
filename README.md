@@ -12,4 +12,4 @@ Next steps? Implement an alternative display for products with no listed country
 *"Warning! No stated Country of Origin. Don't put it in your mouth if you don't know where its been."*
 
 
-![Tariffic demo](https://github.com/marxian/tariffic/blob/master/demo.png)
+![Tariffic demo](https://raw.github.com/marxian/tariffic/master/demo.png)
