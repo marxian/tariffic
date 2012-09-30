@@ -1,0 +1,81 @@
+<html>
+<head>
+	
+</head>
+
+<body style="background:#FFF8DA">
+	<div id="holder" style="width:210px;height:260px"></div>
+	<script src="./raphael.js"></script>
+	<script type="text/javascript">
+		var t_data = {
+			producer_code: "PE",
+			producer_name: "Peru",
+			consumer_code: "GB",
+			GB: 1.24,
+			PE: 11.4
+		};
+		var r = Raphael("holder");
+		var colors = {
+			high: 'red',
+			medium: 'orange',
+			low: 'green'
+		}
+
+		function getTariffColor(pc) {
+			if (pc <= 5) {
+				return colors.low;
+			}
+			if (pc > 5 && pc <= 10 ) {
+				return colors.medium;
+			}
+			return colors.high;
+		}
+
+		r.customAttributes.segment = function (x, y, r, a1, a2, col) {
+            var flag = (a2 - a1) > 180;
+            a1 = (a1 % 360) * Math.PI / 180;
+            a2 = (a2 % 360) * Math.PI / 180;
+            return {
+                path: [["M", x, y], ["l", r * Math.cos(a1), r * Math.sin(a1)], ["A", r, r, 0, +flag, 1, x + r * Math.cos(a2), y + r * Math.sin(a2)], ["z"]],
+                fill: col
+            };
+        };
+
+        // Draw a circle!
+        r.circle(100, 150, 100).attr({stroke: "#fff", "stroke-width": 4});
+
+        // Import Tariff Sector
+        r.path().attr({
+    		segment: [100, 150, 100, 225, 360, getTariffColor(t_data[t_data.consumer_code])], 
+    		stroke: "#fff",
+    		"stroke-width": 4
+    	});
+        // Export Tariff Sector
+        r.path().attr({
+    		segment: [100, 150, 100, 0, 120, getTariffColor(t_data[t_data.producer_code])], 
+    		stroke: "#fff",
+    		"stroke-width": 4
+    	});
+    	// Last Sector
+        r.path().attr({
+    		segment: [100, 150, 100, 120, 225, getTariffColor(9)], 
+    		stroke: "#fff",
+    		"stroke-width": 4
+    	});
+
+        // Producer Country
+        r.text(40, 20, t_data.producer_name).attr({font: '100 30px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#000"});
+        // Import Tariffs
+        r.text(120, 80, "Import").attr({font: '100 18px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#fff"});
+        r.text(130, 100, "Tariffs").attr({font: '100 18px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#fff"});
+        r.text(140, 120, t_data[t_data.consumer_code].toString() + '%').attr({font: '100 24px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif',"font-weight": 'bold', fill: "#fff"});
+        // Export Tariffs
+        r.text(130, 170, "Export").attr({font: '100 18px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#fff"});
+        r.text(125, 190, "Tariffs").attr({font: '100 18px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif', fill: "#fff"});
+        r.text(120, 210, t_data[t_data.producer_code].toString() + '%').attr({font: '100 24px "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif',"font-weight": 'bold', fill: "#fff"});
+        
+
+
+	</script>
+</body>
+</html>
